@@ -5,8 +5,12 @@ ENV MEDIAWIKI_VERSION 1.26
 ENV MEDIAWIKI_FULL_VERSION 1.26.3
 ENV LDAP_VERSION REL1_26
 
-
 ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y --no-install-recommends apt-transport-https
+
+RUN apt-key advanced --keyserver pgp.mit.edu --recv-keys 664C383A3566A3481B942F007A322AC6E84AFDD2
+RUN echo "deb https://releases.wikimedia.org/debian jessie-mediawiki main" > /etc/apt/sources.list.d/parsoid.list
 
 RUN set -x; \
     apt-get update \
@@ -64,6 +68,7 @@ RUN pear install mail
 RUN echo "TLS_CACERTDIR   /etc/ssl/certs" >> /etc/ldap/ldap.conf
 
 VOLUME ["/usr/local/share/ca-certificates"]
+VOLUME ["/var/log/mediawiki"]
 
 COPY docker-entrypoint.sh /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]

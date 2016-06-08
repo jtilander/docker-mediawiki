@@ -5,6 +5,8 @@ set -e
 # Always update the certificate store.
 /usr/sbin/update-ca-certificates
 
+chown www-data /var/log/mediawiki
+
 
 : ${MEDIAWIKI_SITE_NAME:=MediaWiki}
 
