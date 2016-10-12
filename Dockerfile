@@ -67,6 +67,10 @@ RUN pear install mail
 # You can get the certificate by issuing "openssl s_client -showcerts -connect <yourserver>:636"
 RUN echo "TLS_CACERTDIR   /etc/ssl/certs" >> /etc/ldap/ldap.conf
 
+# Or we can simply just say, let's not do any validation.
+# https://www.pickysysadmin.ca/2013/05/13/how-to-configure-mediawiki-to-authenticate-against-active-directory-on-centos/
+RUN echo "TLS_REQCERT     never" >> /etc/ldap/ldap.conf
+
 VOLUME ["/usr/local/share/ca-certificates"]
 VOLUME ["/var/log/mediawiki"]
 
